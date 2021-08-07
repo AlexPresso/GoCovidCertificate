@@ -22,7 +22,7 @@ type Claims struct {
 	Sub		string	`cbor:"2,keyasint"`
 	Aud		string	`cbor:"3,keyasint"`
 	Exp		int64	`cbor:"4,keyasint"`
-	Nbf		int		`cbor:"5,keyasint"`
+	Nbf		int	`cbor:"5,keyasint"`
 	Iat		int64	`cbor:"6,keyasint"`
 	Cti		[]byte  `cbor:"7,keyasint"`
 	HCData	DccRoot `cbor:"-260,keyasint"`
