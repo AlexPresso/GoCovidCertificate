@@ -10,7 +10,7 @@ Golang implementation of the covid certificates. At the moment it only includes 
 - Verify signature ❌ (planned)
 
 ## Installation
-`go install github.com/alexpresso/gocovidcertificate`
+`go install github.com/alexpresso/gocovidcertificate@latest`
 
 ## Usage
 `gocovidcertificate <flags>`
