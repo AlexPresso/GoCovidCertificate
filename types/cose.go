@@ -2,7 +2,7 @@ package types
 
 // Signed see https://datatracker.ietf.org/doc/html/rfc8152#section-2
 type Signed struct {
-	_			struct{} `cbor:",toarray"`
+	_		struct{} `cbor:",toarray"`
 	Protected	[]byte
 	Unprotected	map[interface{}]interface{}
 	Content		[]byte
