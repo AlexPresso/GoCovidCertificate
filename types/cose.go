@@ -25,8 +25,8 @@ type Claims struct {
 	Nbf		int	`cbor:"5,keyasint"`
 	Iat		int64	`cbor:"6,keyasint"`
 	Cti		[]byte  `cbor:"7,keyasint"`
-	HCData	DccRoot `cbor:"-260,keyasint"`
-	LCData	DccRoot `cbor:"-250,keyasint"`
+	HCData		DccRoot `cbor:"-260,keyasint"`
+	LCData		DccRoot `cbor:"-250,keyasint"`
 }
 
 type COSE struct {
