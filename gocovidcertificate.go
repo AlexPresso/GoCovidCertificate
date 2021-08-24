@@ -4,16 +4,15 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/alexpresso/gocovidcertificate/dcc"
+	"github.com/alexpresso/gocovidcertificate/decoders"
 	"log"
 )
 
-
 func main() {
 	var (
-		err error
+		err       error
 		mustPrint = flag.Bool("print", true, "Prints content of the decoded certificate")
-		code = flag.String("code", "", "The DCC code you want to process")
+		code      = flag.String("code", "", "The DCC code you want to process")
 	)
 
 	flag.Parse()
@@ -22,13 +21,13 @@ func main() {
 		log.Fatal("Missing -code flag")
 	}
 
-	cose, err := dcc.Decode(*code)
+	data, err := decoders.Decode(*code)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	if *mustPrint {
-		indent, err := json.MarshalIndent(cose, "", "   ")
+		indent, err := json.MarshalIndent(data, "", "   ")
 		if err != nil {
 			log.Fatal(err)
 		}
