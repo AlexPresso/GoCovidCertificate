@@ -1,33 +1,33 @@
 package decoders
 
 import (
+	"encoding/json"
 	"github.com/alexpresso/gocovidcertificate/types"
 	"github.com/alexpresso/gocovidcertificate/utils"
 	"strconv"
+	"strings"
 )
 
 var TwoDPrefix = "DC"
 
-func twoDDocDecode(input string) (data *types.TwoDDoc, err error) {
+func twoDDocDecode(input string) (certificate *types.Certificate, err error) {
 	header, remaining, err := decodeHeader(input)
 	if err != nil {
 		return nil, err
 	}
 
-	message, remaining, err := decodeMessage(remaining)
+	message, signature, err := decodeData(remaining)
 	if err != nil {
 		return nil, err
 	}
 
-	signature, err := decodeSignature(remaining)
-	if err != nil {
-		return nil, err
-	}
-
-	return &types.TwoDDoc{
-		Header:    *header,
-		Message:   *message,
-		Signature: *signature,
+	return &types.Certificate{
+		Type: types.TWODDOC,
+		Data: &types.TwoDDoc{
+			Header:    header,
+			Message:   message,
+			Signature: signature,
+		},
 	}, nil
 }
 
@@ -61,25 +61,26 @@ func decodeHeader(input string) (header *types.TwoDDocHeader, remaining string, 
 	return header, utils.Substring(input, length, len(input)), err
 }
 
-func decodeMessage(input string) (message *types.TwoDDocMessage, remaining string, err error) {
-	remaining = input
-	data := make(map[string]string)
+func decodeData(input string) (message *types.TwoDDocMessage, signature string, err error) {
+	data := make(map[string]interface{})
 
-	message = &types.TwoDDocMessage{
-		Data: data,
+	units := strings.Split(input, string(rune(31)))
+	groups := strings.Split(units[0], string(rune(29)))
+	signature = units[1]
+
+	for _, group := range groups {
+		key, value := decodeField(group)
+		data[key] = value
 	}
 
-	return message, remaining, nil
-}
-
-func decodeField(input string) (key string, value string, remaining string, err error) {
-	key = utils.Substring(input, 0, 2)
-	value = utils.Substring(input, 2, 4)
-	remaining = utils.Substring(input, 4, len(input))
+	jsonString, err := json.Marshal(data)
+	err = json.Unmarshal(jsonString, &message)
 
 	return
 }
 
-func decodeSignature(input string) (signature *types.TwoDDocSignature, err error) {
-	return nil, nil
+func decodeField(input string) (key string, value string) {
+	key = utils.Substring(input, 0, 2)
+	value = utils.Substring(input, 2, len(input))
+	return
 }
