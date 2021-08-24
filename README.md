@@ -4,7 +4,7 @@ Golang implementation of the covid certificates. At the moment it only includes 
 
 ## Features
 - Decode signed DCC (European QRCodes) data ✅
-- Decode 2D-DOC data ❌ (planned)
+- Decode 2D-DOC data ✅
 - Pretty-print decoded data as JSON ✅
 - Download public-keys from european gateway ❌ (planned)
 - Verify signature ❌ (planned)
@@ -15,10 +15,10 @@ Golang implementation of the covid certificates. At the moment it only includes 
 ## Usage
 `gocovidcertificate <flags>`
 
-| Flag   | Type   | Description              | Required | Default value |
-| ------ | ------ | ------------------------ | -------- | ------------- |
-| -code  | string | QRCode string to decode  | true     | none          |
-| -print | bool   | Prints the QRCode data to console | false | true    |
+| Flag   | Type   | Description                                               | Required | Default value |
+| ------ | ------ | --------------------------------------------------------- | -------- | ------------- |
+| -code  | string | QRCode data to decode (put it between double-quotes `""`) | true     | none          |
+| -print | bool   | Prints the QRCode data to console                         | false    | true          |
 
 Example:  
 `gocovidcertificate -code "HC1:..." -print`
