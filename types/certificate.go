@@ -1,13 +1,13 @@
 package types
 
 const (
-	DCC     CertificateName = "DCC"
-	TWODDOC CertificateName = "2DDOC"
+	DCC     CertificateType = "DCC"
+	TWODDOC CertificateType = "2DDOC"
 )
 
-type CertificateName string
+type CertificateType string
 
 type Certificate struct {
-	Type CertificateName
+	Type CertificateType
 	Data interface{}
 }
