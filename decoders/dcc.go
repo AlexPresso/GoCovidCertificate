@@ -8,7 +8,7 @@ import (
 
 var DCCPrefixes = map[string]bool{"HC1": true, "LT1": true}
 
-func dccDecode(input string) (*types.COSE, error) {
+func dccDecode(input string) (*types.Certificate, error) {
 	var err error
 	var bytes []byte
 
@@ -28,5 +28,13 @@ func dccDecode(input string) (*types.COSE, error) {
 		}
 	}
 
-	return utils.DecodeCOSE(bytes)
+	cose, err := utils.DecodeCOSE(bytes)
+	if err != nil {
+		return nil, err
+	}
+
+	return &types.Certificate{
+		Type: types.DCC,
+		Data: cose,
+	}, nil
 }

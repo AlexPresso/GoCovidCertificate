@@ -4,7 +4,7 @@ Golang implementation of the covid certificates. At the moment it only includes 
 
 ## Features
 - Decode signed DCC (European QRCodes) data ✅
-- Decode 2D-DOC data ❌ (planned)
+- Decode 2D-DOC data ✅
 - Pretty-print decoded data as JSON ✅
 - Download public-keys from european gateway ❌ (planned)
 - Verify signature ❌ (planned)
